@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+python-dotenv
+langchain
+langchain-groq
+langchain-cerebras
+langgraph
+langchain-tavily
+pymupdf
+opencv-python
+pytesseract
+assemblyai
+yt-dlp
+numpy
+pydantic
+python-multipart

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 15% 8%;
+    --foreground: 40 20% 94%;
+    --card: 220 15% 12%;
+    --card-foreground: 40 20% 94%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 40 20% 94%;
+    --primary: 38 92% 50%;
+    --primary-foreground: 220 15% 8%;
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 40 10% 70%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 40 10% 55%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 220 15% 8%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 40 20% 94%;
+    --border: 38 92% 50% / 0.15;
+    --input: 220 15% 20%;
+    --ring: 38 92% 50%;
+    --radius: 0.75rem;
+
+    --paper: 220 15% 12%;
+    --glow: 0 0 20px -5px hsla(38, 92%, 50%, 0.3);
+    --inner-glow: inset 0 0 12px -2px hsla(38, 92%, 50%, 0.1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+::selection {
+  background: hsl(38, 92%, 50%);
+  color: hsl(220, 15%, 8%);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(220, 15%, 20%);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(38, 92%, 50%, 0.5);
+}
+
+/* Prose overrides for markdown */
+.prose-prepbuddy h1,
+.prose-prepbuddy h2,
+.prose-prepbuddy h3,
+.prose-prepbuddy h4 {
+  @apply font-serif text-primary;
+}
+.prose-prepbuddy h1 { @apply text-2xl mt-6 mb-3; }
+.prose-prepbuddy h2 { @apply text-xl mt-5 mb-2; }
+.prose-prepbuddy h3 { @apply text-lg mt-4 mb-2; }
+.prose-prepbuddy p { @apply leading-relaxed mb-3 text-foreground/90; }
+.prose-prepbuddy ul, .prose-prepbuddy ol { @apply ml-4 mb-3 space-y-1; }
+.prose-prepbuddy li { @apply text-foreground/85; }
+.prose-prepbuddy ul li { @apply list-disc; }
+.prose-prepbuddy ol li { @apply list-decimal; }
+.prose-prepbuddy code {
+  @apply font-mono text-accent bg-secondary/50 px-1.5 py-0.5 rounded text-sm;
+}
+.prose-prepbuddy pre {
+  @apply bg-secondary/70 border border-border rounded-lg p-4 overflow-x-auto mb-4;
+}
+.prose-prepbuddy pre code {
+  @apply bg-transparent p-0;
+}
+.prose-prepbuddy blockquote {
+  @apply border-l-2 border-primary/50 pl-4 italic text-foreground/70 my-4;
+}
+.prose-prepbuddy table {
+  @apply w-full border-collapse mb-4;
+}
+.prose-prepbuddy th {
+  @apply text-left p-2 border-b border-border font-mono text-xs uppercase text-primary;
+}
+.prose-prepbuddy td {
+  @apply p-2 border-b border-border/50 text-sm;
+}
+.prose-prepbuddy a {
+  @apply text-primary underline underline-offset-2 hover:text-primary/80;
+}
+.prose-prepbuddy strong {
+  @apply text-foreground font-semibold;
+}
