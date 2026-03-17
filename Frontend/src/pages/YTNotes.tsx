@@ -16,7 +16,7 @@ const YTNotes = () => {
     setIsLoading(true);
 
     try {
-      const res = await api.post('/process-yt', { url, history: [] });
+      const res = await api.post('/process-yt', {message: url, history: [] });
       setMessages([{ role: 'ai', content: res.data.reply}]);
       setSubmitted(true);
     } catch {
@@ -32,8 +32,8 @@ const YTNotes = () => {
     setIsLoading(true);
 
     try {
-      const res = await api.post('/process-yt', { url, history: newHistory });
-      setMessages([...newHistory, { role: 'ai', content: res.data.response || res.data.notes }]);
+      const res = await api.post('/process-yt', {message: url, history: newHistory });
+      setMessages([...newHistory, { role: 'ai', content: res.data.reply}]);
     } catch {
       toast({ title: 'Error', description: 'Failed to get response.', variant: 'destructive' });
     } finally {
