@@ -4,7 +4,7 @@ import { FileUploader } from '@/components/FileUploader';
 import { ChatInterface, ChatMessage } from '@/components/ChatInterface';
 import { toast } from '@/hooks/use-toast';
 
-const AudioNotes = () => {
+const ImageNotes = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [fileUploaded, setFileUploaded] = useState(false);
@@ -14,31 +14,31 @@ const AudioNotes = () => {
     setIsLoading(true);
     setUploadedFile(file);
     const formData = new FormData();
-    formData.append('audio', file);
+    formData.append('image', file);
     formData.append('req', JSON.stringify({ history: [] }));
 
     try {
-      const res = await api.post('/process-audio', formData);
-      setMessages([{ role: 'assistant', content: res.data.notes || res.data.response }]);
+      const res = await api.post('/process-image', formData);
+      setMessages([{ role: 'ai', content: res.data.reply}]);
       setFileUploaded(true);
     } catch {
-      toast({ title: 'Error', description: 'Failed to process audio.', variant: 'destructive' });
+      toast({ title: 'Error', description: 'Failed to process image.', variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSendMessage = async (text: string) => {
-    const newHistory: ChatMessage[] = [...messages, { role: 'user', content: text }];
+    const newHistory: ChatMessage[] = [...messages, { role: 'human', content: text }];
     setMessages(newHistory);
     setIsLoading(true);
 
     try {
       const formData = new FormData();
-      if (uploadedFile) formData.append('audio', uploadedFile);
+      if (uploadedFile) formData.append('image', uploadedFile);
       formData.append('req', JSON.stringify({ history: newHistory }));
-      const res = await api.post('/process-audio', formData);
-      setMessages([...newHistory, { role: 'assistant', content: res.data.response || res.data.notes }]);
+      const res = await api.post('/process-image', formData);
+      setMessages([...newHistory, { role: 'ai', content: res.data.reply}]);
     } catch {
       toast({ title: 'Error', description: 'Failed to get response.', variant: 'destructive' });
     } finally {
@@ -51,12 +51,12 @@ const AudioNotes = () => {
       {!fileUploaded ? (
         <div className="flex-1 flex items-center justify-center p-8 md:p-12">
           <div className="max-w-xl w-full space-y-8 text-center animate-fade-in">
-            <h2 className="font-serif text-3xl md:text-4xl text-primary">Audio Codex</h2>
+            <h2 className="font-serif text-3xl md:text-4xl text-primary">Visual Codex</h2>
             <p className="text-secondary-foreground font-sans">
-              Upload lectures, podcasts, or voice memos. AI will transcribe and generate structured notes.
+              Upload diagrams, slides, or handwritten notes. AI will extract and structure the content.
             </p>
-            <FileUploader label="Upload Audio" accept="audio/*" onFileSelect={handleFileUpload} />
-            {isLoading && <p className="font-mono text-xs text-muted-foreground animate-pulse-glow">Transcribing audio...</p>}
+            <FileUploader label="Upload Image" accept="image/*" onFileSelect={handleFileUpload} />
+            {isLoading && <p className="font-mono text-xs text-muted-foreground animate-pulse-glow">Analyzing image...</p>}
           </div>
         </div>
       ) : (
@@ -66,4 +66,4 @@ const AudioNotes = () => {
   );
 };
 
-export default AudioNotes;
+export default ImageNotes;

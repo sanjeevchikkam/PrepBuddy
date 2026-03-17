@@ -18,7 +18,7 @@ const CareerAdvisor = () => {
 
     try {
       const res = await api.post('/career-advice', { ...form, history: [] });
-      setMessages([{ role: 'assistant', content: res.data.advice || res.data.response }]);
+      setMessages([{ role: 'ai', content: res.data.advice || res.data.response }]);
       setSubmitted(true);
     } catch {
       toast({ title: 'Error', description: 'Failed to get career advice.', variant: 'destructive' });
@@ -28,13 +28,13 @@ const CareerAdvisor = () => {
   };
 
   const handleSendMessage = async (text: string) => {
-    const newHistory: ChatMessage[] = [...messages, { role: 'user', content: text }];
+    const newHistory: ChatMessage[] = [...messages, { role: 'human', content: text }];
     setMessages(newHistory);
     setIsLoading(true);
 
     try {
       const res = await api.post('/career-advice', { ...form, history: newHistory });
-      setMessages([...newHistory, { role: 'assistant', content: res.data.response || res.data.advice }]);
+      setMessages([...newHistory, { role: 'ai', content: res.data.reply}]);
     } catch {
       toast({ title: 'Error', description: 'Failed to get response.', variant: 'destructive' });
     } finally {

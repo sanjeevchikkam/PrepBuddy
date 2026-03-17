@@ -38,7 +38,7 @@ const PDFNotes = () => {
       if (uploadedFile) formData.append('pdf', uploadedFile);
       formData.append('req', JSON.stringify({ history: newHistory }));
       const res = await api.post('/process-pdf', formData);
-      setMessages([...newHistory, { role: 'ai', content: res.data.response || res.data.notes }]);
+      setMessages([...newHistory, { role: 'ai', content: res.data.reply}]);
     } catch {
       toast({ title: 'Error', description: 'Failed to get response.', variant: 'destructive' });
     } finally {

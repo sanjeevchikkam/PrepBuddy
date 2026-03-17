@@ -17,7 +17,7 @@ const YTNotes = () => {
 
     try {
       const res = await api.post('/process-yt', { url, history: [] });
-      setMessages([{ role: 'assistant', content: res.data.notes || res.data.response }]);
+      setMessages([{ role: 'ai', content: res.data.reply}]);
       setSubmitted(true);
     } catch {
       toast({ title: 'Error', description: 'Failed to process YouTube video.', variant: 'destructive' });
@@ -27,13 +27,13 @@ const YTNotes = () => {
   };
 
   const handleSendMessage = async (text: string) => {
-    const newHistory: ChatMessage[] = [...messages, { role: 'user', content: text }];
+    const newHistory: ChatMessage[] = [...messages, { role: 'human', content: text }];
     setMessages(newHistory);
     setIsLoading(true);
 
     try {
       const res = await api.post('/process-yt', { url, history: newHistory });
-      setMessages([...newHistory, { role: 'assistant', content: res.data.response || res.data.notes }]);
+      setMessages([...newHistory, { role: 'ai', content: res.data.response || res.data.notes }]);
     } catch {
       toast({ title: 'Error', description: 'Failed to get response.', variant: 'destructive' });
     } finally {

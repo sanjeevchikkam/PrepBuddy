@@ -17,7 +17,7 @@ const TextNotes = () => {
 
     try {
       const res = await api.post('/process-text', { text, history: [] });
-      setMessages([{ role: 'assistant', content: res.data.notes || res.data.response }]);
+      setMessages([{ role: 'ai', content: res.data.reply}]);
       setSubmitted(true);
     } catch {
       toast({ title: 'Error', description: 'Failed to process text.', variant: 'destructive' });
@@ -27,13 +27,13 @@ const TextNotes = () => {
   };
 
   const handleSendMessage = async (msg: string) => {
-    const newHistory: ChatMessage[] = [...messages, { role: 'user', content: msg }];
+    const newHistory: ChatMessage[] = [...messages, { role: 'human', content: msg }];
     setMessages(newHistory);
     setIsLoading(true);
 
     try {
       const res = await api.post('/process-text', { text, history: newHistory });
-      setMessages([...newHistory, { role: 'assistant', content: res.data.response || res.data.notes }]);
+      setMessages([...newHistory, { role: 'ai', content: res.data.response || res.data.notes }]);
     } catch {
       toast({ title: 'Error', description: 'Failed to get response.', variant: 'destructive' });
     } finally {
